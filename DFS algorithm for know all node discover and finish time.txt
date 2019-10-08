@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector < vector < int > > edg;
+int chk[10000];
+int dis[1000];
+int fin[1000];
+int tt =0, n;
+
+
+/*
+Input-----
+9 10
+1 3
+1 4
+4 8
+4 2
+8 7
+6 7
+2 6
+2 3
+3 5
+5 9
+*/
+void fuck(int u)
+{
+    tt++;
+    chk[u]=1;
+    dis[u]=tt;
+    for(int i=0; i<edg[u].size(); i++)
+    {
+        int v = edg[u][i];
+
+        if(chk[v]==0)
+        {
+            fuck(v);
+        }
+    }
+    tt++;
+    fin[u]=tt;
+    cout<<u<<endl;
+
+    cout<<"All node discover time "<<endl;
+    for(int i=1; i<=n; i++)
+    {
+        cout<<"Node "<<i<<"Discover time - "<<dis[i]<<endl;
+    }
+
+    cout<<"All node finish time "<<endl;
+    for(int i=1; i<=n; i++)
+    {
+        cout<<"Node "<<i<<"Finish time - "<<fin[i]<<endl;
+    }
+}
+int main()
+{
+    cout<<"Enter how many node and how many relation "<<endl;
+    int r; scanf("%d %d", &n, &r);
+
+    edg.resize(r+1);
+
+    memset(chk, 0, sizeof(chk));
+
+    cout<<"Enter all relations "<<endl;
+    for(int i=1; i<=r; i++)
+    {
+        int a, b; scanf("%d %d", &a, &b);
+        edg[a].push_back(b);
+        edg[b].push_back(a);
+    }
+
+    fuck(n);
+}
